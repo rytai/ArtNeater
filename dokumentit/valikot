@@ -1,12 +1,48 @@
 *Kanavan alun valinta
+##################
+#Channel start
+#>255
+##################
+
 *Ledien määrä
+##################
+#Channel width
+#> 24
+##################
+
 *Moodi(jokaiselle ledille omat kanavat/ kaikki saman värisiä)
+##################
+#Channel width
+#> 24
+##################
+
+
 *max kirkkaus
+##################
+#brightness 255
+#xxxxxxxx           <- palkeilla 0-100%
+##################
+
+
 *esiasetetut
 --r
+##################
+#channel R 255
+#xxxxxxxx           <- palkeilla 0-100%
+##################
 --g
 --b
 --colorfade
+##################
+#Demo
+#Colorfade On       <-On/Off
+##################
+
 *Wifi
+##################
+#Wifi connected
+#ip: 192.168.10.50    
+##################
+
 --näytä ip
 *(Päivitystaajuus)
