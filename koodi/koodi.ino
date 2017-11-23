@@ -87,12 +87,12 @@ void loop() {
     if (current_time >= mainloop_next_update){
         mainloop_next_update = current_time + mainloop_max_frequency;
 
-        //Testataan syöttölaitteet ja päivitetään näyttö jos jokin syöte on muuttunut
+        //Testataan syöttölaitteet ja kutsutaan menun päivitystä jos jokin syöte on muuttunut
         if ( UpdateInput() ){
-            //Merkataan lcd näyttö päivitettäväksi, jos menu on muuttunut
+            //jos menu muuttunut -> Merkataan lcd näyttö päivitettäväksi
             display_update_required = UpdateMenu();
         }
-        //Mikäli tarpeeksi aikaa on kulunut viime lcd päivityksestä -> päivitetään lcd
+        //jos tarpeeksi aikaa on kulunut viime lcd päivityksestä -> päivitetään lcd
         if ( display_update_required && (millis() >= lcd_update_next) ){
             lcd_update_next += lcd_update_frequency;
             UpdateLCD();
