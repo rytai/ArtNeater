@@ -2,11 +2,8 @@
 #include <Wire.h> //I2C kommunikointi
 #include <hd44780.h>//hd44780 ajuri (LCD)
 #include <hd44780ioClass/hd44780_I2Cexp.h> //i2c expander ajuri lcd:lle
-
-//########################## Pin define #####################
-const unsigned int PIN_ENCODER_CLK = 5;  // Connected to CLK on KY-040
-const unsigned int PIN_ENCODER_DT = 4;  // Connected to DT on KY-040
-const unsigned int PIN_ENCODER_BUTTON = 7;  // Connected to DT on KY-040
+#include "definitions.h" //Pin definition
+#include "input.h" //Encoderin syötteet
 
 //########################## Channel Data ###################
 unsigned int channel_start = 0;
@@ -36,14 +33,6 @@ const unsigned int LCD_ROWS = 2;
 //Kanavilta tulleet rgb arvot kerrotaan tällä. arvo*brightness/100
 unsigned byte brightness = 100; //0-100%
 
-//########################## Input ##########################
-signed int encoder_movement = 0;
-bool encoder_clk_current = 0;
-bool encoder_clk_last = 0;
-bool button_pressed_current = false;
-bool button_pressed_last = false;
-bool button_falling_edge = false;
-
 //######################## Networking  ######################
 //udp databuffer etc?
 
@@ -71,55 +60,6 @@ void setup() {
     //Alustetaan ajanotot
     lcd_update_next = millis();
     mainloop_next_update = millis();
-}
-
-//Päivitä encoderin sijainti ja palauta onko se muuttunut
-bool InputEncoderHasChanged(){
-  encoder_clk_current = digitalRead(PIN_ENCODER_CLK);
-  //Pyörähdys lasketaan vain encoderin clk pinnin laskureunalla.
-  if ( (encoder_clk_current != encoder_clk_last) && !encoder_clk_current){
-    //clk muuttui ensin -> pyörähdettiin myötäpäivään
-    if( digitalRead(PIN_ENCODER_DT) != encoder_clk_current ){
-      encoder_movement += 1;   
-    }else{ // Pyörähdettiin vastapäivään
-      encoder_movement -= 1;
-    }
-      return true;
-  }else{
-      return false;
-  }
-}
-
-bool InputButtonHasChanged(){
-  button_pressed_last = button_pressed_current;
-  button_pressed_current = digitalRead(PIN_ENCODER_BUTTON);
-  if (button_pressed_current != button_pressed_last){
-    if(!button_pressed_current){
-      button_falling_edge = true;
-    }
-    button_falling_edge = false;
-    return true;
-  }
-  return false;
-}
-
-//Päivitetään input laitteiden tila
-//palauttaa true, jos jotain on muuttunut.
-bool UpdateInput(){
-  bool input_changed = false; //Palautetaan funktion lopussa true jos jokin muuttunut
-  if ( InputEncoderHasChanged() ){
-    input_changed = true;
-  }
-  if ( InputButtonHasChanged() ){
-    input_changed = true;
-  }
-  return input_changed;
-}
-
-//Tähän tulee encoderin kiihtyvyyden käsittely
-//Menu luokassa kutsutaan tätä
-signed int GetEncoderMovement(){
-  return encoder_movement;
 }
 
 //Sisältää menutoiminnot
