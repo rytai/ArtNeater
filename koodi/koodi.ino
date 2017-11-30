@@ -4,6 +4,7 @@
 #include <hd44780ioClass/hd44780_I2Cexp.h> //i2c expander ajuri lcd:lle
 #include "definitions.h" //Pin definition
 #include "input.h" //Encoderin syötteet
+#include "output.h" //30.11. lcdnäytön tulosteet
 
 //########################## Channel Data ###################
 unsigned int channel_start = 0;
@@ -39,7 +40,7 @@ unsigned byte brightness = 100; //0-100%
 //######################## Menu #############################
 //Sisältää menun tuottaman char arrayn, joka pusketaan lcd-ruudulle.
 char menu_lcd_projection[16*2];
-//######################## Misclanneous #####################
+//######################## Miscellanneous #####################
 unsigned long mainloop_next_update = 0;
 const unsigned int mainloop_max_frequency = 1; //ms
 unsigned long current_time = 0;
@@ -57,6 +58,22 @@ void setup() {
     Serial.begin (9600);
     Serial.println("Starting.");
 
+	//alustetaan lcd-näyttö
+	int status;
+  status = lcd.begin(LCD_COLS, LCD_ROWS);
+  if (status) // non zero status means it was unsuccesful
+  {
+    status = -status; // convert negative status value to positive number
+
+    // begin() failed so blink error code using the onboard LED if possible
+    hd44780::fatalError(status); // does not return
+  }
+
+  // initalization was successful, the backlight should be on now
+
+  // Print a message to the LCD
+  lcd.print("Hello, World!");
+
     //Alustetaan ajanotot
     lcd_update_next = millis();
     mainloop_next_update = millis();
@@ -68,8 +85,7 @@ bool UpdateMenu(){
     return true;
 }
 
-void UpdateLCD(){
-}
+//void UpdateLCD(){} moved to output.c
 
 void loop() {
     //Testataan onko kulunut tarpeeksi aikaa viimeisestä loopin läpikäynnistä
