@@ -37,12 +37,24 @@ unsigned byte brightness = 100; //0-100%
 //######################## Networking  ######################
 //udp databuffer etc?
 
+//######################## Interrupt service #############################
+//interrupt service frequency and variables
+
+const unsigned int interrupt_frequency = 2; // 2 ms for 500 hZ
+
+bool demo_on; // is the demo macro on
+bool colormix_on // is manual color mix on
+bool new_artnet_data; // is new artnet data being received
+
+unsigned long new_interrupt = 0;
+
 //######################## Menu #############################
 //Sisältää menun tuottaman char arrayn, joka pusketaan lcd-ruudulle.
 char menu_lcd_projection[16*2];
 //######################## Miscellanneous #####################
 unsigned long mainloop_next_update = 0;
 const unsigned int mainloop_max_frequency = 1; //ms
+
 unsigned long current_time = 0;
 //###########################################################
 
