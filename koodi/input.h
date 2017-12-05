@@ -1,14 +1,16 @@
-#include "definitions.h"
 
 #ifndef INPUT 
+#include "definitions.h"
+#include <arduino.h>
+
 #define INPUT 
 
 //########################## Input ##########################
 signed int encoder_movement = 0;    //Amount of ticks rotated
 signed int encoder_accelerated = 0; //Rotation + acceleration
 //helpers variables
-bool encoder_clk_current = 0;
-bool encoder_clk_last = 0;
+bool encoder_clk_current = false;
+bool encoder_clk_last = false;
 bool button_pressed_current = false;
 bool button_pressed_last = false;
 //button trigger

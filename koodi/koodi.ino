@@ -6,6 +6,8 @@
 #include "input.h" //Encoderin syötteet
 #include "output.h" //30.11. lcdnäytön tulosteet
 
+
+
 //########################## Channel Data ###################
 unsigned int channel_start = 0;
 unsigned int channel_width = 1;
@@ -13,7 +15,7 @@ unsigned byte channel_buffer[128*3];
 
 //########################## Modes ##########################
 //0 Default     Artnet in, leds out.
-//1 simpleRPG   Users sets all leds to same R,P,G values
+//1 simpleRGB   Users sets all leds to same R,G,B values
 //2 RainbowFade Colorful demo animation
 unsigned byte operation_mode = 0;
 // simpleRGB
@@ -30,6 +32,8 @@ const unsigned int lcd_update_frequency = 100; //ms
 const unsigned int LCD_COLUMNS = 16;
 const unsigned int LCD_ROWS = 2;
 
+
+
 //########################## Adjustments ####################
 //Kanavilta tulleet rgb arvot kerrotaan tällä. arvo*brightness/100
 unsigned byte brightness = 100; //0-100%
@@ -42,8 +46,6 @@ unsigned byte brightness = 100; //0-100%
 
 const unsigned int interrupt_frequency = 2; // 2 ms for 500 hZ
 
-bool demo_on; // is the demo macro on
-bool colormix_on // is manual color mix on
 bool new_artnet_data; // is new artnet data being received
 
 unsigned long new_interrupt = 0;
@@ -62,6 +64,9 @@ void setup() {
     //Alustetaan GPIO pinnit
     pinMode (PIN_ENCODER_CLK,INPUT);
     pinMode (PIN_ENCODER_DT,INPUT);
+	pinMode (PIN_ENCODER_BUTTON,INPUT);
+	pinMode (PIN_LCD_SDA,OUTPUT);
+	pinMode (PIN_LCD_SCL,OUTPUT);
 
     //Alustetaan laitteisiin liittyvät muuttujat
     encoder_dt_last = digitalRead(PIN_ENCODER_DT);
