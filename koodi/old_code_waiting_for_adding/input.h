@@ -1,7 +1,7 @@
 
 #ifndef INPUT 
 #include "definitions.h"
-#include <arduino.h>
+#include "Arduino.h"
 
 #define INPUT 
 
