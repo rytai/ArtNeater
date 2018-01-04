@@ -16,20 +16,23 @@ void setup() {
   pinMode (PIN_LCD_SCL,OUTPUT);
   */
 
+
   //Alustetaan laitteisiin liittyvät muuttujat
-  encoder_dt_last = digitalRead(PIN_ENCODER_DT);
+  encoder_dt_last = 0;
+  
+  Serial.println("test");
 
 
   //alustetaan lcd-näyttö
-  int status;
-  status = lcd.begin(LCD_COLS, LCD_ROWS);
-  if (status) // non zero status means it was unsuccesful
+  int status_;
+  status_ = lcd.begin(LCD_COLS, LCD_ROWS);
+  if (status_) // non zero status means it was unsuccesful
   {
     Serial.print("LCD not connected. hanging program up");
-    status = -status; // convert negative status value to positive number
+    status_ = -status_; // convert negative status value to positive number
 
     // begin() failed so blink error code using the onboard LED if possible
-    hd44780::fatalError(status); // does not return
+    hd44780::fatalError(status_); // does not return
   }
 
   // initialization was successful, the backlight should be on now
