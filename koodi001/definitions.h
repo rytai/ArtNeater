@@ -1,6 +1,7 @@
 #include <Wire.h> //I2C kommunikointi
 #include <hd44780.h>//hd44780 ajuri (LCD)
 #include <hd44780ioClass/hd44780_I2Cexp.h> //i2c expander ajuri lcd:lle
+#include <user_interface.h>
 
 
 
@@ -83,7 +84,11 @@ byte brightness = 100; //0-100%
 //######################## Interrupt service #############################
 //interrupt service frequency and variables
 
-const unsigned int interrupt_frequency = 2; // 2 ms for 500 hZ
+const unsigned int interrupt_frequency = 20; // 20 ms for 50 hZ
+
+os_timer_t interrupt_timer; //interrupt ajastin
+
+bool interrupt_test = false; //muuttuja interruptin testausta varten
 
 bool new_artnet_data; // is new artnet data being received
 
