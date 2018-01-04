@@ -1,28 +1,31 @@
 #include "definitions.h" //Pin definition
 
 
-
-
 void setup() { 
+
+  //Aloitetaan serial debugging
+  Serial.begin (9600);
+  Serial.println("Starting.");
+  
     //Alustetaan GPIO pinnit
   pinMode (PIN_ENCODER_CLK,INPUT);
   pinMode (PIN_ENCODER_DT,INPUT);
   pinMode (PIN_ENCODER_BUTTON,INPUT);
+  /*
   pinMode (PIN_LCD_SDA,OUTPUT);
   pinMode (PIN_LCD_SCL,OUTPUT);
+  */
 
-    //Alustetaan laitteisiin liittyvät muuttujat
-    encoder_dt_last = digitalRead(PIN_ENCODER_DT);
+  //Alustetaan laitteisiin liittyvät muuttujat
+  encoder_dt_last = digitalRead(PIN_ENCODER_DT);
 
-    //Aloitetaan serial debugging
-    Serial.begin (9600);
-    Serial.println("Starting.");
 
   //alustetaan lcd-näyttö
   int status;
   status = lcd.begin(LCD_COLS, LCD_ROWS);
   if (status) // non zero status means it was unsuccesful
   {
+    Serial.print("LCD not connected. hanging program up");
     status = -status; // convert negative status value to positive number
 
     // begin() failed so blink error code using the onboard LED if possible
