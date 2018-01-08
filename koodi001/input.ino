@@ -41,6 +41,8 @@ bool UpdateInput(){
   }
   if ( InputButtonHasChanged() ){
     input_changed = true;
+    if(!selection)selection=true; // jos nappia painetaan vaihdetaan menun tilaa
+    else selection=false;
   }
   return input_changed;
 }
