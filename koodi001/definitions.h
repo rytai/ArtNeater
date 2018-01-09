@@ -22,6 +22,7 @@ const unsigned int PIN_LCD_SCL = 5; //connected to SCL on the i2c expanders
 
 //########################## Input ##########################
 signed int encoder_movement = 0;    //Amount of ticks rotated
+int encoder_movement_last=0; // For input determination
 signed int encoder_accelerated = 0; //Rotation + acceleration
 //helpers variables
 bool encoder_clk_current = false;
@@ -97,6 +98,8 @@ unsigned long new_interrupt = 0;
 //######################## Menu #############################
 //Sisältää menun tuottaman char arrayn, joka pusketaan lcd-ruudulle.
 char menu_lcd_projection[16*2];
+int menu_state=0;
+bool selection=false; //muutetaanko arvoa vai liikutaanko menussa
 //######################## Miscellanneous #####################
 unsigned long mainloop_next_update = 0;
 const unsigned int mainloop_max_frequency = 10; //ms

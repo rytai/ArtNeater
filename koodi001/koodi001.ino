@@ -49,9 +49,7 @@ void setup() {
 
 //Sisältää menutoiminnot
 //Palauttaa true, jos menu on muuttunut -> seuraa lcd päivitys
-bool UpdateMenu(){
-    return true;
-}
+//bool UpdateMenu moved to menu.ino
 
 //void UpdateLCD(){} moved to c_output
 
