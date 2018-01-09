@@ -13,8 +13,8 @@ const unsigned int PIN_ENCODER_CLK = 14;  // Connected to CLK on KY-040
 const unsigned int PIN_ENCODER_DT = 12;  // Connected to DT on KY-040
 const unsigned int PIN_ENCODER_BUTTON = 13;  // Connected to SW on KY-040"
 /*
-const unsigned int PIN_LCD_SDA = 4; //connected to SDA on the i2c expander
-const unsigned int PIN_LCD_SCL = 5; //connected to SCL on the i2c expanders
+const unsigned int PIN_LCD_SDA = 9; //connected to SDA on the i2c expander
+const unsigned int PIN_LCD_SCL = 10; //connected to SCL on the i2c expanders
 */
 
 

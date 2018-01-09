@@ -1,9 +1,8 @@
+#include "input.h"
+
 //Päivitä encoderin sijainti ja palauta onko se muuttunut
 bool InputEncoderHasChanged(){
-  //Serial.print("Encoder change");
-  encoder_clk_last = encoder_clk_current;
-  //encoder_clk_current = digitalRead(PIN_ENCODER_CLK);
-  Serial.println(encoder_clk_current);
+  encoder_clk_current = digitalRead(PIN_ENCODER_CLK);
   //Pyörähdys lasketaan vain encoderin clk pinnin laskureunalla.
   if ( (encoder_clk_current != encoder_clk_last) && !encoder_clk_current){
     //clk muuttui ensin -> pyörähdettiin myötäpäivään
@@ -12,7 +11,6 @@ bool InputEncoderHasChanged(){
     }else{ // Pyörähdettiin vastapäivään
       encoder_movement -= 1;
     }
-    Serial.println(encoder_movement);
       return true;
   }else{
       return false;
