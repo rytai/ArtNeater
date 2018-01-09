@@ -3,6 +3,7 @@
 #include <hd44780ioClass/hd44780_I2Cexp.h> //i2c expander ajuri lcd:lle
 #include <user_interface.h>
 
+#include <ws2812_i2s.h>
 
 
 
@@ -17,6 +18,13 @@ const unsigned int PIN_LCD_SDA = 4; //connected to SDA on the i2c expander
 const unsigned int PIN_LCD_SCL = 5; //connected to SCL on the i2c expanders
 */
 
+/*
+I2s inteface ledejä varten
+PinName PinNum  IO    Function Name
+MTDO    13      IO15  I2SO_BCK
+U0RXD   25      IO3   I2SO_DATA
+GPIO2   14      IO2   I2SO_WS
+*/
 
 //#define INPUT 
 
@@ -62,6 +70,7 @@ byte operation_mode = 0;
 byte simpleRGB_r = 255;
 byte simpleRGB_g = 255;
 byte simpleRGB_b = 255;
+bool simpleRGB_change = false; //Set false when change led colour.
 // raindbow fade
 byte rainbow_fade_speed = 0;
 
@@ -109,5 +118,11 @@ unsigned long current_time = 0;
 //###################Randomness##############################
 int i = 0;
 char rand_buffer[10240]; // Buffer must be multiple of 4 your you might have a bad time
+//###########################################################
+//################### LEDS     ##############################
+const int nleds;
+static WS2812 ledstrip;
+static Pixel_t pixels[nleds];
+
 //###########################################################
 

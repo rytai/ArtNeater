@@ -1,3 +1,4 @@
+
 #include "definitions.h" //Pin definition
 
 
@@ -47,6 +48,8 @@ void setup() {
     os_timer_arm(&interrupt_timer,interrupt_frequency,true);
     lcd_update_next = millis();
     mainloop_next_update = 0;
+
+  initializeLEDs();
 }
 
 //Sisältää menutoiminnot

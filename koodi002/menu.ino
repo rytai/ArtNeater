@@ -1,8 +1,8 @@
 //Kaikkien tulee olla saman pituisia.
 const int headerLenght = 11;
 const char hBrightness[] = "Brightness:";
-const char hHeader2[]    = "Jokumuu:  :";
-const char hHeader14[]   = "vieläyksi :";
+const char hHeader2[]    = "Jokumuu:   ";
+const char hHeader14[]   = "vieläyksi: ";
 
 //Siirtää headerLenght määrän kirjaimia annetusta arraysta menu_lcd_projection arrayyn.
 void putHeader(char * headerText){
@@ -14,8 +14,7 @@ void putHeader(char * headerText){
 //Muuntaa annetun tavun char-arvoksi ja vie sen arrayyn.
 void putValue(int val){
   const int valuePosition = 13;
-  char valueAsChar[3];
-  
+  char valueAsChar[3];  
   //"Tulostaa" numeron char arrayhyn
   sprintf(valueAsChar, "%d", val); 
   for(int i = 0; i < 3; i++){
