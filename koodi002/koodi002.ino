@@ -25,7 +25,7 @@ void setup() {
 
   //alustetaan lcd-näyttö
   int status_;
- /* status_ = lcd.begin(LCD_COLS, LCD_ROWS);
+  status_ = lcd.begin(LCD_COLS, LCD_ROWS);
   if (status_) // non zero status means it was unsuccesful
   {
     Serial.print("LCD not connected. hanging program up");
@@ -39,7 +39,9 @@ void setup() {
   Serial.print("LCD connected.");
   // Print a message to the LCD
   lcd.print("Hello, World!");
-*/
+  lcd.setCursor(0,1);
+  lcd.print(millis());
+
     //Alustetaan ajanotot
     os_timer_setfn(&interrupt_timer,timerISR,NULL);
     os_timer_arm(&interrupt_timer,interrupt_frequency,true);
@@ -49,9 +51,7 @@ void setup() {
 
 //Sisältää menutoiminnot
 //Palauttaa true, jos menu on muuttunut -> seuraa lcd päivitys
-bool UpdateMenu(){
-    return true;
-}
+//bool UpdateMenu moved to menu.ino
 
 //void UpdateLCD(){} moved to c_output
 
@@ -79,14 +79,14 @@ void loop() {
     //Testataan onko kulunut tarpeeksi aikaa viimeisestä loopin läpikäynnistä
     current_time = millis();
      if(interrupt_test=true){
-      Serial.println("interrupt");
-      interrupt_test=false;
+       //Serial.println("interrupt");
+       interrupt_test=false;
     }
     if (current_time >= mainloop_next_update){
         mainloop_next_update = current_time + mainloop_max_frequency;
 
-        random_buffer();
-        Serial.println(rand_buffer);
+        //random_buffer();
+        //Serial.println(rand_buffer);
 
         //Testataan syöttölaitteet ja kutsutaan menun päivitystä jos jokin syöte on muuttunut
         if ( UpdateInput() ){
