@@ -1,8 +1,14 @@
 //Kaikkien tulee olla saman pituisia.
 const int headerLenght = 11;
 const char hBrightness[] = "Brightness:";
-const char hHeader2[]    = "Jokumuu:   ";
-const char hHeader14[]   = "vieläyksi: ";
+const char hDMXch[]    =   "DMX ch:    ";
+const char hLEDcount[]   = "LED count: ";
+const char hOpMode[] =     "Mode:      ";
+const char hManualR[] =    "Manual R:  ";
+const char hManualB[] =    "Manual B:  ";
+const char hManualG[] =    "Manual G:  ";
+const char hWifi[]=        "Wifi:      ";
+const char hDemo[]=        "Demo:      ";
 
 //Siirtää headerLenght määrän kirjaimia annetusta arraysta menu_lcd_projection arrayyn.
 void putHeader(char * headerText){
@@ -13,7 +19,7 @@ void putHeader(char * headerText){
 
 //Muuntaa annetun tavun char-arvoksi ja vie sen arrayyn.
 void putValue(int val){
-  const int valuePosition = 13;
+  const int valuePosition = 17;
   char valueAsChar[3];  
   //"Tulostaa" numeron char arrayhyn
   sprintf(valueAsChar, "%d", val); 
@@ -24,114 +30,55 @@ void putValue(int val){
 
 
 void menuLCD(){
-  /*
+  
   //DMX address
   if(menu_state==0){
-                      //1234567890123456
-  menu_lcd_projection="Channel start   
-                       > "+ channel_start;  
+  putHeader(hDMXch);
+  putValue(channel_start);                  
+    
   }
   //LED count
   else if(menu_state==1){
-                     //1234567890123456
-  menu_lcd_projection="Channel width   
-                       > "+ channel_width;
+  putHeader(hLEDcount);
+  putValue(channel_count);
                         
   }
   //Operation mode
   else if(menu_state==2){
-    if(operation_mode==0)
-    {
-                      //1234567890123456
-  menu_lcd_projection="Mode: ARTnet";  
-    }
-    else if(operation_mode==1)
-    {
- menu_lcd_projection="Mode: manual color";      
-    }
-    else if(operation_mode==2)
-    {
- menu_lcd_projection="Mode: demo";      
-    }
+
+  putHeader(hOpMode);
+  putValue(operation_mode);
   }
   //Max brightness
   else if(menu_state==3){
- if(brightness<25)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "X";      
-    }  
- else if(brightness>=25 && brightness<50)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XX";      
-    }
-     else if(brightness>=50 && brightness<75)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXX";      
-    }
-     else if(brightness>=75 && brightness<100)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXX";      
-    }
-     else if(brightness>=100 && brightness<125)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXXX";      
-    }
-     else if(brightness>=125 && brightness<150)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXXXX";      
-    }
-     else if(brightness>=150 && brightness<175)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXXXXX";      
-    }
-     else if(brightness>=200 && brightness<225)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXXXXXX";      
-    }
-     else if(brightness>=225 && brightness<255)
-    {
-                    //1234567890123456
- menu_lcd_projection="Brightness: "+brightness
-                     "XXXXXXXXX";      
-    }
+  putHeader(hBrightness);
+  putValue(brightness);
   }
   //manual red
   else if(menu_state==4){
-  menu_lcd_projection="Red level: "+simpleRGB_r;  
+  putHeader(hManualR);
+  putValue(simple_RGB_r);
   }
   //manual blue
   else if(menu_state==5){
-  menu_lcd_projection="Blue level: "+simpleRGB_b;  
+  putHeader(hManualB);
+  putValue(simple_RGB_b);  
   }
   //manual green
   else if(menu_state==6){
-  menu_lcd_projection="Green level "+simpleRGB_g;  
+  putHeader(hManualG);
+  putValue(simple_RGB_g);
   }
   //demo macro (placeholder)
   else if(menu_state==7){
-  menu_lcd_projection="Demo";  
+  putHeader(hDemo);
+   
   }
   //Wifi state and IP address (placeholder)
   else if(menu_state==8){
-  menu_lcd_projection="Wifi: ";  
+  putHeader(hWifi);
+  
   }
-  */
 }
 
 bool UpdateMenu(){
