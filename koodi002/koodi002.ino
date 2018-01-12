@@ -85,19 +85,23 @@ void loop() {
        //Serial.println("interrupt");
        interrupt_test=false;
     }
+
+    //Testataan syöttölaitteet ja kutsutaan menun päivitystä jos jokin syöte on muuttunut
+    if ( UpdateInput() ){
+      menu_update_required = true;
+    }
+    
     if (current_time >= mainloop_next_update){
         mainloop_next_update = current_time + mainloop_max_frequency;
 
         //random_buffer();
         //Serial.println(rand_buffer);
 
-        //Testataan syöttölaitteet ja kutsutaan menun päivitystä jos jokin syöte on muuttunut
-        if ( UpdateInput() ){
-            //jos menu muuttunut -> Merkataan lcd näyttö päivitettäväksi
-            display_update_required = UpdateMenu();
-        }
         //jos tarpeeksi aikaa on kulunut viime lcd päivityksestä -> päivitetään lcd
         if ( display_update_required && (millis() >= lcd_update_next) ){
+            //jos menu muuttunut -> Merkataan lcd näyttö päivitettäväksi
+            menu_update_required = false;
+            display_update_required = UpdateMenu();
             lcd_update_next += lcd_update_frequency;
             UpdateLCD();
         }

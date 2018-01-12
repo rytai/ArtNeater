@@ -12,7 +12,7 @@
 //########################## Pin define #####################
 const unsigned int PIN_ENCODER_CLK = 14;  // Connected to CLK on KY-040
 const unsigned int PIN_ENCODER_DT = 12;  // Connected to DT on KY-040
-const unsigned int PIN_ENCODER_BUTTON = 13;  // Connected to SW on KY-040"
+const unsigned int PIN_ENCODER_BUTTON = 16;  // Connected to SW on KY-040"
 /*
 const unsigned int PIN_LCD_SDA = 4; //connected to SDA on the i2c expander
 const unsigned int PIN_LCD_SCL = 5; //connected to SCL on the i2c expanders
@@ -65,19 +65,19 @@ byte channel_buffer[128*3];
 //0 Default     Artnet in, leds out.
 //1 simpleRGB   Users sets all leds to same R,G,B values
 //2 RainbowFade Colorful demo animation
-byte operation_mode = 0;
+byte operation_mode = 1;
 // simpleRGB
-byte simpleRGB_r = 255;
-byte simpleRGB_g = 255;
-byte simpleRGB_b = 255;
-bool simpleRGB_change = false; //Set false when change led colour.
+byte simpleRGB_r = 100;
+byte simpleRGB_g = 0;
+byte simpleRGB_b = 128;
+bool simpleRGB_change = true; //Set false when change led colour. //set true when input changes
 // raindbow fade
 byte rainbow_fade_speed = 0;
 
 //########################## Display ########################
 bool display_update_required = true;
 unsigned long lcd_update_next = 0; //ms
-const unsigned int lcd_update_frequency = 100; //ms
+const unsigned int lcd_update_frequency = 500; //ms
 const unsigned int LCD_COLS = 16;
 const unsigned int LCD_ROWS = 2;
 hd44780_I2Cexp lcd;
@@ -107,7 +107,9 @@ unsigned long new_interrupt = 0;
 //######################## Menu #############################
 //Sisältää menun tuottaman char arrayn, joka pusketaan lcd-ruudulle.
 char menu_lcd_projection[16*2];
-int menu_state=0;
+char menu_lcd_projection_row2[16];
+int menu_state=6;
+bool menu_update_required = true;
 bool selection=false; //muutetaanko arvoa vai liikutaanko menussa
 //######################## Miscellanneous #####################
 unsigned long mainloop_next_update = 0;
@@ -120,7 +122,7 @@ int i = 0;
 char rand_buffer[10240]; // Buffer must be multiple of 4 your you might have a bad time
 //###########################################################
 //################### LEDS     ##############################
-const int nleds;
+const int nleds=8;
 static WS2812 ledstrip;
 static Pixel_t pixels[nleds];
 

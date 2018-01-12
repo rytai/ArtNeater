@@ -8,15 +8,34 @@ static Pixel_t pixels[nleds];
 
 void lcdFlush()
 {
-  lcd.setCursor(0, 1);
+  lcd.setCursor(0, 0);
   lcd.print("                  ");
 }
 
 void UpdateLCD()
 {
-  lcdFlush();
-  lcd.setCursor(0, 1);
+  //lcdFlush();
+  lcd.setCursor(0, 0);
+  
   lcd.print(menu_lcd_projection);
+  memcpy(menu_lcd_projection_row2, menu_lcd_projection+(sizeof(byte)*16), 16);
+  
+  lcd.setCursor(0, 1);
+  lcd.print(menu_lcd_projection_row2);
+
+  
+  Serial.print ("MENU LCD PROJ:-");
+  Serial.print(menu_lcd_projection);
+  Serial.println("-");
+  Serial.print ("Row2:-");
+  Serial.print(menu_lcd_projection_row2);
+  Serial.println("-");
+  Serial.print("Channel start:");
+  Serial.println(channel_start);
+  Serial.print("Encoder movement:");
+  Serial.println(encoder_movement);
+  Serial.print("Encoder movement last:");
+  Serial.println(encoder_movement_last);
 }
 
 void colormix(){
@@ -25,7 +44,7 @@ void colormix(){
 }
 
 void initializeLEDs(){
-  ledstrip.init(NUM_LEDS);
+  ledstrip.init(8);
 }
 
 /*
@@ -40,7 +59,7 @@ void ArtnetToLeds(){
   for (i=0; i<nleds; i++){
     //GRB järjestys
     pixels[i].R = channel_buffer[channel_start+(buffer_i*3)+1];
-    pixels[i].G = channel_buffer[channel_start+(buffer_i*3);
+    pixels[i].G = channel_buffer[channel_start+(buffer_i*3)];
     pixels[i].B = channel_buffer[channel_start+(buffer_i*3)+2];
     buffer_i += 3;
     //Jos paketteja on tullu vähemmän kuin ledejä, loopataan saatuja värejä ledeille
@@ -54,10 +73,11 @@ void RGBtoLeds(){
     //GRB järjestys
     pixels[i].R = simpleRGB_r;
     pixels[i].G = simpleRGB_g;
-    pixels[i].B = simpleRGB_b
+    pixels[i].B = simpleRGB_b;
   }
   ledstrip.show(pixels);
   simpleRGB_change = false;
+  Serial.println("Led update");
 }
 
 /*
@@ -69,6 +89,7 @@ byte operation_mode = 0;
 void UpdateLeds(){
   if(operation_mode = 0){
   }else if (operation_mode == 1){
+    RGBtoLeds();
   }else if (operation_mode == 2){
   }
 }
