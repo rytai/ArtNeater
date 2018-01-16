@@ -30,7 +30,7 @@ GPIO2   14      IO2   I2SO_WS
 
 //########################## Input ##########################
 signed int encoder_movement = 0;    //Amount of ticks rotated
-int encoder_movement_last=0; // For input determination
+//int encoder_movement_last=0; For input determination
 signed int encoder_accelerated = 0; //Rotation + acceleration
 //helpers variables
 bool encoder_clk_current = false;

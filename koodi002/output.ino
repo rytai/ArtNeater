@@ -34,8 +34,7 @@ void UpdateLCD()
   Serial.println(channel_start);
   Serial.print("Encoder movement:");
   Serial.println(encoder_movement);
-  Serial.print("Encoder movement last:");
-  Serial.println(encoder_movement_last);
+
 }
 
 void colormix(){

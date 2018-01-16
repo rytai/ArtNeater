@@ -93,28 +93,28 @@ bool UpdateMenu(){
   Serial.println(selection);
   if(selection){
     if(menu_state==0){
-      encoder_movement += encoder_movement - encoder_movement_last;
+      if((channel_start > 0 && channel_start < 256) || (channel_start == 0 && encoder_movement > 0) || (channel_start == 256 && encoder_movement < 0))channel_start += encoder_movement;
     }
     else if(menu_state==1){
-      channel_width+= encoder_movement - encoder_movement_last;
+       if((channel_width > 1 && channel_width < 256) || (channel_width == 1 && encoder_movement > 0) || (channel_width == 256 && encoder_movement < 0))channel_width+= encoder_movement;
     }
     else if(menu_state==2){
-      operation_mode+= encoder_movement - encoder_movement_last;
+       if((operation_mode > 0 && operation_mode < 2) || (operation_mode == 0 && encoder_movement > 0) || (operation_mode == 2 && encoder_movement < 0))operation_mode+= encoder_movement;
     }
     else if(menu_state==3){
-      brightness+= encoder_movement - encoder_movement_last;
+      if((brightness > 0 && brightness < 100) || (brightness == 0 && encoder_movement > 0) || (brightness == 100 && encoder_movement < 0)) brightness+= encoder_movement;
     }
     else if(menu_state==4){
       simpleRGB_change = true;
-      simpleRGB_r+= encoder_movement - encoder_movement_last;
+      if((simpleRGB_r > 0 && simpleRGB_r < 256) || (simpleRGB_r == 0 && encoder_movement > 0) || (simpleRGB_r == 256 && encoder_movement < 0)) simpleRGB_r+= encoder_movement;
     }
     else if(menu_state==5){
       simpleRGB_change = true;
-      simpleRGB_b+= encoder_movement - encoder_movement_last;
+      if((simpleRGB_b > 0 && simpleRGB_b < 256) || (simpleRGB_b == 0 && encoder_movement > 0) || (simpleRGB_b == 256 && encoder_movement < 0)) simpleRGB_b+= encoder_movement;
     }
     else if(menu_state==6){
       simpleRGB_change = true;
-      simpleRGB_g+= encoder_movement;
+      if((simpleRGB_g > 0 && simpleRGB_g < 256) || (simpleRGB_g == 0 && encoder_movement > 0) || (simpleRGB_g == 256 && encoder_movement < 0)) simpleRGB_g+= encoder_movement;
     }
     encoder_movement = 0;
   }
@@ -126,7 +126,7 @@ bool UpdateMenu(){
 }
 
 void menuSwitch(){
-menu_state += encoder_movement;
+if((menu_state < 6 && menu_state > 0 )|| (menu_state==0 && encoder_movement > 0) || (menu_state==6 && encoder_movement < 0))menu_state += encoder_movement;
 /*if(encoder_movement>encoder_movement_last) menu_state++;
 else if(encoder_movement<encoder_movement_last) menu_state--;
 */

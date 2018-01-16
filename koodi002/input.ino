@@ -7,10 +7,10 @@ bool InputEncoderHasChanged(){
   if ( (encoder_clk_current != encoder_clk_last) && !encoder_clk_current){
     //clk muuttui ensin -> pyörähdettiin myötäpäivään
     if( digitalRead(PIN_ENCODER_DT) != encoder_clk_current ){
-      encoder_movement_last = encoder_movement;
+     // encoder_movement_last = encoder_movement;
       encoder_movement += 1;   
     }else{ // Pyörähdettiin vastapäivään
-      encoder_movement_last = encoder_movement;
+    //  encoder_movement_last = encoder_movement;
       encoder_movement -= 1;
     }
     Serial.println(encoder_movement);
