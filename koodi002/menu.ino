@@ -104,7 +104,7 @@ void menuLCD(){
 }
 
 bool UpdateMenu(){
-  if(debugging) Serial.print("Menu: ");
+  if(debugging) Serial.print("SELECTION: ");
   if(debugging) Serial.println(selection);
   if(selection){
     if(menu_state==0){

@@ -1,43 +1,62 @@
 //Päivitä encoderin sijainti ja palauta onko se muuttunut
 bool InputEncoderHasChanged(){
+  int maxMillisecondsBetweenTicks;
   //Serial.print("Encoder change");
   encoder_clk_last = encoder_clk_current;
   encoder_clk_current = digitalRead(PIN_ENCODER_CLK);
   //Pyörähdys lasketaan vain encoderin clk pinnin laskureunalla.
   if ( (encoder_clk_current != encoder_clk_last) && !encoder_clk_current){
     //clk muuttui ensin -> pyörähdettiin myötäpäivään
+
+    unsigned long c_time = millis();
+
+    if(c_time > (lastTickMillis + 2)){
+      
     if( digitalRead(PIN_ENCODER_DT) != encoder_clk_current ){
-     // encoder_movement_last = encoder_movement;
-      encoder_movement += 1;   
+     // encoder_movement_last = encoder_movement;      
+      if(c_time < (lastTickMillis + maxMillisecondsBetweenTicks)){        
+        ticks ++;
+      }else {
+        ticks = 1;
+      }    
+      lastTickMillis = c_time;
+      
     }else{ // Pyörähdettiin vastapäivään
     //  encoder_movement_last = encoder_movement;
-      encoder_movement -= 1;
+      if(c_time < (lastTickMillis + maxMillisecondsBetweenTicks)){        
+        ticks --;
+      }else {
+        ticks = -1;
+      }
+    
+      lastTickMillis = c_time;
     }
+    encoder_movement += ticks;
+    
     if(debugging) Serial.println(encoder_movement);
       return true;
+    }
+    
   }else{
       return false;
   }
 }
 
-bool InputButtonHasChanged(){
+bool InputButtonLowEdge(){
+  
   button_pressed_last = button_pressed_current;
   button_pressed_current = digitalRead(PIN_ENCODER_BUTTON);
-  /*
-  Serial.print ("BUTTON Current: ");
-  Serial.print (button_pressed_last);
-  Serial.print (" BUTTON Last: ");
-  Serial.print (button_pressed_current);
-  Serial.print (" ##");
-  Serial.print (digitalRead(PIN_ENCODER_BUTTON));
-  Serial.println (" ##");
-  */
-  if (button_pressed_current != button_pressed_last){
-    if(!button_pressed_current){
-      button_falling_edge = true;
+
+  
+  if ((button_pressed_current != button_pressed_last)&&!button_pressed_current){
+    unsigned long c_time = millis();
+    if(c_time > (buttonLastMillis + buttonDeBounceInterval)){  
+      buttonLastMillis = millis();
+      if (debugging) Serial.println ("Button low edge");
+      return true;
+    }else{
+      return false;
     }
-    button_falling_edge = false;
-    return true;
   }
   return false;
 }
@@ -49,13 +68,17 @@ bool UpdateInput(){
   if ( InputEncoderHasChanged() ){
     input_changed = true;
   }
-  if ( InputButtonHasChanged() ){
+  if ( InputButtonLowEdge() ){
     input_changed = true;
-    if(button_falling_edge){
-      selection=!selection;
+    if(debugging) Serial.print("SELECTION CHANGE:");
+    if(debugging) Serial.println(selection);
+    selection = !selection;
+    if(selection){
+      menu_lcd_projection[15] = '#';
+    }else{
+      menu_lcd_projection[15] = ' ';
     }
-    if(debugging) Serial.println("SELECTION CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-  
+
   }
   return input_changed;
 }

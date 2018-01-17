@@ -41,6 +41,13 @@ bool button_pressed_last = false;
 bool button_falling_edge = false;
 int encoder_dt_last;
 
+//Käytetään encoder kiihtyvyyteen
+unsigned long lastTickMillis = 0;
+signed int ticks;
+
+unsigned long buttonLastMillis = 0;
+unsigned long buttonDeBounceInterval = 2;
+
 //Päivitä encoderin sijainti ja palauta onko se muuttunut
 //Käytetään vain UpdateInput -funktiossa.
 bool InputEncoderHasChanged();
@@ -67,9 +74,9 @@ byte channel_buffer[128*3];
 //2 RainbowFade Colorful demo animation
 byte operation_mode = 1;
 // simpleRGB
-byte simpleRGB_r = 100;
+byte simpleRGB_r = 60;;
 byte simpleRGB_g = 0;
-byte simpleRGB_b = 128;
+byte simpleRGB_b = 70;//128;
 bool simpleRGB_change = true; //Set false when change led colour. //set true when input changes
 // raindbow fade
 byte rainbow_fade_speed = 0;
