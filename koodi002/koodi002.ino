@@ -1,6 +1,8 @@
 
 #include "definitions.h" //Pin definition
 
+#define debugging true
+
 
 void setup() { 
 
@@ -20,7 +22,7 @@ void setup() {
 
   //Alustetaan laitteisiin liittyvät muuttujat
   encoder_dt_last = 0;
-  
+
   Serial.println("test");
 
 
@@ -40,8 +42,8 @@ void setup() {
   Serial.print("LCD connected.");
   // Print a message to the LCD
   lcd.print("Hello, World!");
-  lcd.setCursor(0,1);
-  lcd.print(millis());
+  /*lcd.setCursor(0,1);
+  lcd.print(millis());*/
 
     //Alustetaan ajanotot
     os_timer_setfn(&interrupt_timer,timerISR,NULL);

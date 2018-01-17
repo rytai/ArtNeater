@@ -13,7 +13,7 @@ bool InputEncoderHasChanged(){
     //  encoder_movement_last = encoder_movement;
       encoder_movement -= 1;
     }
-    Serial.println(encoder_movement);
+    if(debugging) Serial.println(encoder_movement);
       return true;
   }else{
       return false;
@@ -51,8 +51,10 @@ bool UpdateInput(){
   }
   if ( InputButtonHasChanged() ){
     input_changed = true;
-    selection=!selection;
-    Serial.println("SELECTION CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    if(button_falling_edge){
+      selection=!selection;
+    }
+    if(debugging) Serial.println("SELECTION CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   
   }
   return input_changed;

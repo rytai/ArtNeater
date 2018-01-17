@@ -20,10 +20,11 @@ void UpdateLCD()
   lcd.print(menu_lcd_projection);
   memcpy(menu_lcd_projection_row2, menu_lcd_projection+(sizeof(byte)*16), 16);
   
-  lcd.setCursor(0, 1);
+  /*lcd.setCursor(0, 1);
   lcd.print(menu_lcd_projection_row2);
-
-  
+  */
+  /*
+  if(debugging) {
   Serial.print ("MENU LCD PROJ:-");
   Serial.print(menu_lcd_projection);
   Serial.println("-");
@@ -34,6 +35,8 @@ void UpdateLCD()
   Serial.println(channel_start);
   Serial.print("Encoder movement:");
   Serial.println(encoder_movement);
+  }
+  */
 
 }
 
@@ -76,7 +79,7 @@ void RGBtoLeds(){
   }
   ledstrip.show(pixels);
   simpleRGB_change = false;
-  Serial.println("Led update");
+  if(debugging) Serial.println("Led update");
 }
 
 /*

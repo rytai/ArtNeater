@@ -12,7 +12,7 @@
 //########################## Pin define #####################
 const unsigned int PIN_ENCODER_CLK = 14;  // Connected to CLK on KY-040
 const unsigned int PIN_ENCODER_DT = 12;  // Connected to DT on KY-040
-const unsigned int PIN_ENCODER_BUTTON = 16;  // Connected to SW on KY-040"
+const unsigned int PIN_ENCODER_BUTTON = 0;  // Connected to SW on KY-040"
 /*
 const unsigned int PIN_LCD_SDA = 4; //connected to SDA on the i2c expander
 const unsigned int PIN_LCD_SCL = 5; //connected to SCL on the i2c expanders
@@ -116,6 +116,7 @@ unsigned long mainloop_next_update = 0;
 const unsigned int mainloop_max_frequency = 10; //ms
 
 unsigned long current_time = 0;
+//bool debugging = false;
 //###########################################################
 //###################Randomness##############################
 int i = 0;

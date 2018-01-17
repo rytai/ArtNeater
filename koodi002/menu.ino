@@ -22,16 +22,31 @@ void putHeader(const char * headerText){
 
 //Muuntaa annetun tavun char-arvoksi ja vie sen arrayyn.
 void putValue(int val){
-  const int valuePosition = 17;
-  char valueAsChar[3];  
+  int valuePosition;
+  char valueAsChar[3];
+  int digits;
+  if (val < 10){
+    digits = 1;
+    valuePosition = 14;
+  }
+  else if (val < 100){
+    digits = 2;
+    valuePosition = 13;
+  }
+  else {
+    digits = 3;
+    valuePosition = 12;
+  }
   //"Tulostaa" numeron char arrayhyn
   sprintf(valueAsChar, "%d", val);
-  Serial.println("testi"); 
-  for(int i = 0; i < 3; i++){
-    menu_lcd_projection[i+valuePosition] = ' ';
+  if(debugging) Serial.println("testi");
+  menu_lcd_projection[i+0] = ' ';
+  menu_lcd_projection[i+1] = ' ';
+  menu_lcd_projection[i+2] = ' ';
+  for(int i = 0; i < digits; i++){
     menu_lcd_projection[i+valuePosition] = valueAsChar[i];
-    Serial.print("Val as char ");
-    Serial.println(valueAsChar[i]);
+    if(debugging) Serial.print("Val as char ");
+    if(debugging) Serial.println(valueAsChar[i]);
   }
 }
 
@@ -89,8 +104,8 @@ void menuLCD(){
 }
 
 bool UpdateMenu(){
-  Serial.print("Menu: ");
-  Serial.println(selection);
+  if(debugging) Serial.print("Menu: ");
+  if(debugging) Serial.println(selection);
   if(selection){
     if(menu_state==0){
       if((channel_start > 0 && channel_start < 256) || (channel_start == 0 && encoder_movement > 0) || (channel_start == 256 && encoder_movement < 0))channel_start += encoder_movement;
@@ -131,7 +146,7 @@ if((menu_state < 6 && menu_state > 0 )|| (menu_state==0 && encoder_movement > 0)
 else if(encoder_movement<encoder_movement_last) menu_state--;
 */
 encoder_movement = 0;
-Serial.print("Menu state: ");
-Serial.println(menu_state);
+if(debugging) Serial.print("Menu state: ");
+if(debugging) Serial.println(menu_state);
 }
 
